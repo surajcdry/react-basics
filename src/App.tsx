@@ -1,34 +1,27 @@
-import ListGroup from "./components/ListGroup";
-import Button from "./components/Button";
 import { useState } from "react";
-import Alert from "./components/Alert";
-import Like from "./components/Like";
 
 function App() {
-  let title = "Cities";
-  let cities = ["Kathmandu", "New York", "San Francisco"];
+  const [cart, setCart] = useState({
+    discount: 0.1,
+    items: [
+      { id: 1, title: "Product 1", quantity: 1 },
+      { id: 2, title: "Product 2", quantity: 1 },
+    ],
+  });
 
-  // to show cities
-  const [listVisible, setListVisibility] = useState(false);
-
-  // for list clicks
-  const onSelectItem = (item: string) => {
-    console.log(item);
+  const handleClick = () => {
+    setCart({
+      ...cart,
+      items: cart.items.map((item) =>
+        item.id === 1 ? { ...item, quantity: item.quantity + 1 } : item
+      ),
+    });
+    console.log(cart.items[0]);
   };
 
   return (
     <>
-      <Like onClick = {()=> console.log("Clicked")} />
-      <Button onClick={() => setListVisibility(true)}>Show</Button>
-      {listVisible && (
-        <Alert onClose={() => setListVisibility(false)}>
-          <ListGroup
-            heading={title}
-            items={cities}
-            onSelectItem={onSelectItem}
-          ></ListGroup>
-        </Alert>
-      )}
+      <button onClick={handleClick}> Click Me </button>
     </>
   );
 }
